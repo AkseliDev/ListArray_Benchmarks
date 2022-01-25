@@ -49,25 +49,3 @@ Benchmarks of multiple list and array methods to compare performance differences
 |  ListUnsafe_For_Fixed_Reverse | 3.164 us | 0.0038 us | 0.0034 us |
 |   ListUnsafe_For_Fixed_AddrLT | 3.151 us | 0.0044 us | 0.0041 us |
 
-
-## NET 6.0 x64 - AMD Ryzen 7 3700U
-
-### 1 000 000 items
-* Possible timing precision issue (?)
-
-|                        Method |       Mean |    Error |    StdDev |
-|:------------------------------|-----------:|---------:|----------:|
-|                  List_ForEach | 1,377.7 us | 56.00 us | 159.76 us |
-|            List_ForEach_Local | 1,254.3 us | 60.00 us | 176.90 us |
-|                      List_For |   875.0 us | 87.39 us | 257.67 us |
-|                List_For_Local |   653.7 us | 12.28 us |  24.80 us |
-|                 List_For_Span |   377.1 us |  6.76 us |   6.32 us |
-|                 Array_ForEach |   394.0 us |  6.98 us |   6.19 us |
-|           Array_ForEach_Local |   394.9 us |  7.83 us |   9.90 us |
-|                     Array_For |   584.7 us | 11.55 us |  25.35 us |
-|               Array_For_Local |   371.8 us |  1.53 us |   1.20 us |
-|                Array_For_Span |   376.1 us |  6.96 us |   6.17 us |
-| ArrayUnsafe_For_Fixed_Reverse |   393.9 us |  7.28 us |   6.45 us |
-|  ArrayUnsafe_For_Fixed_AddrLT |   407.6 us |  7.68 us |   9.44 us |
-|  ListUnsafe_For_Fixed_Reverse |   784.3 us | 43.65 us | 128.71 us |
-|   ListUnsafe_For_Fixed_AddrLT |   622.7 us | 15.96 us |  47.06 us |

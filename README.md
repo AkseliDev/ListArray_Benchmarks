@@ -14,22 +14,22 @@ Benchmarks of multiple list and array methods to compare performance differences
 ## NET 6.0 x64 - i7-9800X CPU 3.80GHz
 
 ### 1 000 000 items
-|                        Method |     Mean |   Error |   StdDev |   Median |
-|:------------------------------|---------:|--------:|---------:|---------:|
-|                  List_ForEach | 740.1 us | 1.04 us |  0.92 us | 739.9 us |
-|            List_ForEach_Local | 741.7 us | 3.27 us |  2.90 us | 740.5 us |
-|                      List_For | 569.0 us | 0.48 us |  0.40 us | 568.9 us |
-|                List_For_Local | 585.1 us | 0.95 us |  0.84 us | 584.8 us |
-|                 List_For_Span | 517.3 us | 0.25 us |  0.22 us | 517.3 us |
-|                 Array_ForEach | 363.5 us | 0.71 us |  0.63 us | 363.5 us |
-|           Array_ForEach_Local | 363.1 us | 0.35 us |  0.27 us | 363.0 us |
-|                     Array_For | 519.8 us | 0.87 us |  0.77 us | 519.5 us |
-|               Array_For_Local | 517.4 us | 0.31 us |  0.29 us | 517.3 us |
-|                Array_For_Span | 514.0 us | 1.39 us |  1.30 us | 513.9 us |
-| ArrayUnsafe_For_Fixed_Reverse | 350.6 us | 2.61 us |  2.18 us | 349.7 us |
-|  ArrayUnsafe_For_Fixed_AddrLT | 321.0 us | 6.40 us | 10.33 us | 315.0 us |
-|  ListUnsafe_For_Fixed_Reverse | 337.0 us | 0.81 us |  0.71 us | 336.7 us |
-|   ListUnsafe_For_Fixed_AddrLT | 314.8 us | 0.83 us |  0.65 us | 314.6 us |
+|                        Method |     Mean |   Error |  StdDev |
+|:------------------------------|---------:|--------:|--------:|
+|                  List_ForEach | 741.3 us | 5.00 us | 4.18 us |
+|            List_ForEach_Local | 739.3 us | 0.62 us | 0.49 us |
+|                      List_For | 568.4 us | 0.38 us | 0.32 us |
+|                List_For_Local | 585.5 us | 0.83 us | 0.65 us |
+|                 List_For_Span | 517.6 us | 0.53 us | 0.47 us |
+|                 Array_ForEach | 363.1 us | 0.14 us | 0.11 us |
+|           Array_ForEach_Local | 363.3 us | 0.20 us | 0.17 us |
+|                     Array_For | 519.9 us | 0.26 us | 0.22 us |
+|               Array_For_Local | 517.6 us | 0.29 us | 0.26 us |
+|                Array_For_Span | 512.4 us | 1.36 us | 1.27 us |
+| ArrayUnsafe_For_Fixed_Reverse | 349.8 us | 2.65 us | 2.83 us |
+|  ArrayUnsafe_For_Fixed_AddrLT | 314.1 us | 0.21 us | 0.19 us |
+|  ListUnsafe_For_Fixed_Reverse | 339.9 us | 0.53 us | 0.50 us |
+|   ListUnsafe_For_Fixed_AddrLT | 314.1 us | 0.15 us | 0.14 us |
 
 ### 10 000 items
 |                        Method |     Mean |     Error |    StdDev |

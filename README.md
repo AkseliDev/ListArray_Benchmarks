@@ -54,6 +54,7 @@ Benchmarks of multiple list and array methods to compare performance differences
 
 ### 1 000 000 items
 * Possible timing precision issue (?)
+
 |                        Method |       Mean |    Error |    StdDev |
 |:------------------------------|-----------:|---------:|----------:|
 |                  List_ForEach | 1,377.7 us | 56.00 us | 159.76 us |

@@ -1,29 +1,43 @@
 ﻿using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using ListArray_Benchmarks;
+using System.Numerics;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
 
 
 // AdditionalTests.Ensure_FixedWorks_List();
+// AdditionalTests.Theory_Does_GC_Move_OnForced();
 
 BenchmarkRunner.Run<Benchmarking>();
 
+Console.ReadKey();
+Console.ReadKey();
+Console.ReadKey();
+Console.ReadKey();
 
+[MemoryDiagnoser]
 public class Benchmarking {
 
     const int ArraySize = 1_000_000;
 
+    /**
+     * (?) Add multiple lists and arrays to ensure fair cpu cache? -unsure if matters
+     * 
+     * @see AdditionalTests::Theory_Does_GC_Move_OnForced
+     */
 
     List<int> intList;
-    
     int[] intArray;
+
 
     public Benchmarking() {
         intList = Enumerable.Range(0, ArraySize).ToList();
         intArray = intList.ToArray();
     }
-
-
+    
+    
     #region List Methods
 
     [Benchmark]
@@ -78,7 +92,7 @@ public class Benchmarking {
 
 
     #region Array Methods
-
+    
     [Benchmark]
     public int Array_ForEach() {
         int result = 0;
@@ -87,7 +101,7 @@ public class Benchmarking {
         }
         return result;
     }
-
+    
     [Benchmark]
     public int Array_ForEach_Local() {
         var localPin = intArray;
@@ -127,8 +141,9 @@ public class Benchmarking {
         return result;
     }
 
+    
     #endregion
-
+    
     #region Unsafe Methods
     [Benchmark]
     public int ArrayUnsafe_For_Fixed_Reverse() {
@@ -144,7 +159,7 @@ public class Benchmarking {
         }
         return result;
     }
-
+    
     [Benchmark]
     public int ArrayUnsafe_For_Fixed_AddrLT() {
         int result = 0;
@@ -160,7 +175,7 @@ public class Benchmarking {
         }
         return result;
     }
-
+    
     [Benchmark]
     public int ListUnsafe_For_Fixed_Reverse() {
 
@@ -200,4 +215,60 @@ public class Benchmarking {
         return result;
     }
     #endregion
+    
+    [Benchmark]
+    public int ArrayUnsafe_Unrolled() {
+
+        int result = 0;
+        unsafe {
+            fixed (int* arr = intArray) {
+                int* pointer = arr;
+                int length = intArray.Length;
+                while(length >= 8) {
+                    result += pointer[0];
+                    result += pointer[1];
+                    result += pointer[2];
+                    result += pointer[3];
+                    result += pointer[4];
+                    result += pointer[5];
+                    result += pointer[6];
+                    result += pointer[7];
+                    pointer += 8;
+                    length -= 8;
+                }
+                while(length-- > 0) {
+                    result += pointer[0];
+                    pointer++;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// <see href="https://docs.microsoft.com/en-us/dotnet/standard/simd"/>
+    /// </summary>
+    [Benchmark]
+    public int Array_SimdVectorization() {
+
+        var pin = intArray;
+
+        int size = Vector<int>.Count;
+        var vector = Vector<int>.Zero;
+
+        int i;
+        int end = pin.Length - size;
+
+        for (i = 0; i <= end; i += size) {
+            vector = Vector.Add(vector, new Vector<int>(pin, i));
+        }
+
+        int result = Vector.Dot(vector, Vector<int>.One);
+        for(; i < pin.Length; i++) {
+            result += pin[i];
+        }
+
+        return result;
+    }
 }

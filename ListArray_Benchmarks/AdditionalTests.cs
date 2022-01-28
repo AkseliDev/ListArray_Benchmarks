@@ -4,11 +4,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace ListArray_Benchmarks;
 
 internal static class AdditionalTests {
 
+
+    /// <summary>
+    /// Test to see if the garbage collector moves the array on a forced GC
+    /// </summary>
+    unsafe public static void Theory_Does_GC_Move_OnForced() {
+
+        /**
+         * Observations:
+         * Confirmed, the GC does move the array sometimes on smaller sizes
+         * But on a larger array (1000000+ elements) (assuming Large Objects) the GC does not seem to move it
+         */
+        const int ArraySize = 1_000_000;
+        const int Tests = 10;
+
+        // lets create a large array
+        int[] array = new int[ArraySize];
+
+        Span<ulong> addresses = stackalloc ulong[Tests];
+        
+        for(int i = 0; i < addresses.Length; i++) {
+
+            // get the current base address
+            addresses[i] = (ulong)Unsafe.AsPointer(ref array[0]);
+
+            // force garbage collection to run, and attempt to move the memory
+            System.GC.Collect();
+        }
+
+        // lets print the base addresses and check if they are all the same
+        ulong firstAddress = addresses[0];
+        bool areSame = true;
+        for (int i = 0; i < addresses.Length; i++) {
+            ulong address = addresses[i];
+            Console.WriteLine($"{{{i}}} address: {address}");
+            if (address != firstAddress) {
+                areSame = false;
+            }
+        }
+
+        Console.WriteLine($"All addresses match: {areSame}");
+
+    }
 
     /// <summary>
     /// Method to ensure that fixed works for lists (via <see cref="CollectionsMarshal.AsSpan"/>)

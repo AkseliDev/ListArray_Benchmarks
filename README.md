@@ -30,6 +30,8 @@ Benchmarks of multiple list and array methods to compare performance differences
 |  ArrayUnsafe_For_Fixed_AddrLT | 314.1 us | 0.21 us | 0.19 us |
 |  ListUnsafe_For_Fixed_Reverse | 339.9 us | 0.53 us | 0.50 us |
 |   ListUnsafe_For_Fixed_AddrLT | 314.1 us | 0.15 us | 0.14 us |
+|          ArrayUnsafe_Unrolled | 246.9 us | 0.38 us | 0.36 us |
+|       Array_SimdVectorization | 95.21 us | 0.16 us | 0.15 us |
 
 ### 10 000 items
 |                        Method |     Mean |     Error |    StdDev |

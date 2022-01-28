@@ -17,7 +17,6 @@ Console.ReadKey();
 Console.ReadKey();
 Console.ReadKey();
 
-[MemoryDiagnoser]
 public class Benchmarking {
 
     const int ArraySize = 1_000_000;

@@ -270,4 +270,29 @@ public class Benchmarking {
 
         return result;
     }
+    
+    // new impl, using Sum instead of Dot product, seems to be faster
+    // i dont know why the initial author used dot product.
+    [Benchmark]
+    public int Array_SimdVectorization2() {
+
+        var pin = intArray;
+
+        int size = Vector<int>.Count;
+        var vector = Vector<int>.Zero;
+
+        int i;
+        int end = pin.Length - size;
+
+        for (i = 0; i <= end; i += size) {
+            vector = Vector.Add(vector, new Vector<int>(pin, i));
+        }
+
+        int result = Vector.Sum(vector);
+        for (; i < pin.Length; i++) {
+            result += pin[i];
+        }
+
+        return result;
+    }
 }
